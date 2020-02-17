@@ -10,7 +10,7 @@
   ],
   "ignorePatterns": [
     "bin",
-    "serverless.js"
+    "*.js"
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": [

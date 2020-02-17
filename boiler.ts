@@ -1,7 +1,9 @@
 import { join } from "path"
-import { SetupBoiler, PromptBoiler, InstallBoiler, TeardownBoiler, npm } from "boiler-dev"
+import { SetupBoiler, InstallBoiler, npm } from "boiler-dev"
 
-export const setupBoiler: SetupBoiler = async ({ destDir }) => {
+export const setupBoiler: SetupBoiler = async ({
+  destDir,
+}) => {
   await npm.install(
     destDir,
     [
@@ -11,28 +13,31 @@ export const setupBoiler: SetupBoiler = async ({ destDir }) => {
       "eslint-config-prettier",
       "eslint-plugin-prettier",
       "lint-staged",
-      "prettier"
+      "prettier",
     ],
     { saveDev: true }
   )
 }
 
-export const installBoiler: InstallBoiler = async ({ destDir, files }) => {
+export const installBoiler: InstallBoiler = async ({
+  destDir,
+  files,
+}) => {
   const actions = []
 
   for (const { name, source } of files) {
     if (name === "eslintrc.json") {
       actions.push({
         action: "write",
-        path: join(destDir, ".estlintrc.json"),
-        source
+        path: join(destDir, ".eslintrc.json"),
+        source,
       })
     }
-    if (name === "pretierrc.json") {
+    if (name === "prettierrc.json") {
       actions.push({
         action: "write",
         path: join(destDir, ".prettierrc"),
-        source
+        source,
       })
     }
   }
@@ -42,16 +47,13 @@ export const installBoiler: InstallBoiler = async ({ destDir, files }) => {
     path: join(destDir, "package.json"),
     source: {
       "lint-staged": {
-        "*.{css,json,md}": [
-          "prettier --write",
-          "git add"
-        ],
+        "*.{css,json,md}": ["prettier --write", "git add"],
         "*.{js,jsx,ts}": [
           "eslint --ignore-path .gitignore --fix",
-          "git add"
-        ]
-      }
-    }
+          "git add",
+        ],
+      },
+    },
   })
 
   return actions
