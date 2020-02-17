@@ -37,5 +37,22 @@ export const installBoiler: InstallBoiler = async ({ destDir, files }) => {
     }
   }
 
+  actions.push({
+    action: "merge",
+    path: join(destDir, "package.json"),
+    source: {
+      "lint-staged": {
+        "*.{css,json,md}": [
+          "prettier --write",
+          "git add"
+        ],
+        "*.{js,jsx,ts}": [
+          "eslint --ignore-path .gitignore --fix",
+          "git add"
+        ]
+      }
+    }
+  })
+
   return actions
 }
