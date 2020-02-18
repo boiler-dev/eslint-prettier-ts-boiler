@@ -1,5 +1,5 @@
 import { join } from "path"
-import { SetupBoiler, InstallBoiler, npm } from "boiler-dev"
+import { InstallBoiler } from "boiler-dev"
 
 export const installBoiler: InstallBoiler = async ({
   destDir,
