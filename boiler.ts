@@ -1,24 +1,6 @@
 import { join } from "path"
 import { SetupBoiler, InstallBoiler, npm } from "boiler-dev"
 
-export const setupBoiler: SetupBoiler = async ({
-  destDir,
-}) => {
-  await npm.install(
-    destDir,
-    [
-      "@typescript-eslint/eslint-plugin",
-      "@typescript-eslint/parser",
-      "eslint",
-      "eslint-config-prettier",
-      "eslint-plugin-prettier",
-      "lint-staged",
-      "prettier",
-    ],
-    { saveDev: true }
-  )
-}
-
 export const installBoiler: InstallBoiler = async ({
   destDir,
   files,
@@ -54,6 +36,20 @@ export const installBoiler: InstallBoiler = async ({
         ],
       },
     },
+  })
+
+  actions.push({
+    action: "npmInstall",
+    dev: true,
+    source: [
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "eslint",
+      "eslint-config-prettier",
+      "eslint-plugin-prettier",
+      "lint-staged",
+      "prettier",
+    ],
   })
 
   return actions
