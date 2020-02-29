@@ -3,7 +3,7 @@ import { GenerateBoiler } from "boiler-dev"
 
 export const generate: GenerateBoiler = async ({
   files,
-  rootDirPath,
+  cwdPath,
 }) => {
   const actions = []
 
@@ -11,14 +11,14 @@ export const generate: GenerateBoiler = async ({
     if (name === "eslintrc.json") {
       actions.push({
         action: "write",
-        path: join(rootDirPath, ".eslintrc.json"),
+        path: join(cwdPath, ".eslintrc.json"),
         source,
       })
     }
     if (name === "prettierrc.json") {
       actions.push({
         action: "write",
-        path: join(rootDirPath, ".prettierrc"),
+        path: join(cwdPath, ".prettierrc"),
         source,
       })
     }
@@ -26,7 +26,7 @@ export const generate: GenerateBoiler = async ({
 
   actions.push({
     action: "merge",
-    path: join(rootDirPath, "package.json"),
+    path: join(cwdPath, "package.json"),
     source: {
       "lint-staged": {
         "*.{css,json,md}": ["prettier --write", "git add"],
