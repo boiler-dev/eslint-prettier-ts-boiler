@@ -1,5 +1,25 @@
 import { join } from "path"
-import { GenerateBoiler } from "boiler-dev"
+import { GenerateBoiler, InstallBoiler } from "boiler-dev"
+
+export const install: InstallBoiler = async () => {
+  const actions = []
+
+  actions.push({
+    action: "npmInstall",
+    dev: true,
+    source: [
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "eslint",
+      "eslint-config-prettier",
+      "eslint-plugin-prettier",
+      "lint-staged",
+      "prettier",
+    ],
+  })
+
+  return actions
+}
 
 export const generate: GenerateBoiler = async ({
   files,
@@ -36,20 +56,6 @@ export const generate: GenerateBoiler = async ({
         ],
       },
     },
-  })
-
-  actions.push({
-    action: "npmInstall",
-    dev: true,
-    source: [
-      "@typescript-eslint/eslint-plugin",
-      "@typescript-eslint/parser",
-      "eslint",
-      "eslint-config-prettier",
-      "eslint-plugin-prettier",
-      "lint-staged",
-      "prettier",
-    ],
   })
 
   return actions
