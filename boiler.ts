@@ -1,4 +1,3 @@
-import { join } from "path"
 import { ActionBoiler } from "boiler-dev"
 
 export const install: ActionBoiler = async () => {
@@ -21,32 +20,24 @@ export const install: ActionBoiler = async () => {
   return actions
 }
 
-export const generate: ActionBoiler = async ({
-  files,
-  cwdPath,
-}) => {
+export const generate: ActionBoiler = async () => {
   const actions = []
 
-  for (const { name, source } of files) {
-    if (name === "eslintrc.json") {
-      actions.push({
-        action: "write",
-        path: join(cwdPath, ".eslintrc.json"),
-        source,
-      })
-    }
-    if (name === "prettierrc.json") {
-      actions.push({
-        action: "write",
-        path: join(cwdPath, ".prettierrc"),
-        source,
-      })
-    }
-  }
+  actions.push({
+    action: "write",
+    path: ".eslintrc.json",
+    sourcePath: "eslintrc.json",
+  })
+
+  actions.push({
+    action: "write",
+    path: ".prettierrc",
+    sourcePath: "prettierrc.json",
+  })
 
   actions.push({
     action: "merge",
-    path: join(cwdPath, "package.json"),
+    path: "package.json",
     source: {
       "lint-staged": {
         "*.{css,json,md}": ["prettier --write", "git add"],
